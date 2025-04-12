@@ -1,0 +1,16 @@
+﻿
+<div style=" border-style: solid; padding: 5; margin: 30; width: auto; height: auto">
+
+<p style="padding: 10; color: red; font-size: 20; width: auto; border-style: double; text-align: center;">제목</p>
+<div style="padding: 5; width: auto; color: #ff00ff; border-style: none;">
+
+
+<p style="padding: 5; margin: 5; color: red; font-size: 13; border-style: none; width: auto;">본문 1</p>
+<p style="padding: 5; margin: 5; color: #333333; font-size: 13; border-style: none; width: auto;">본문 2</p>
+<p style="padding: 5; margin: 5; color: red; font-size: 13;  border-style: double; width: 200; ">본문 3</p>
+<div style="width: 140; height: 70; margin: 50; background-color: #444444;"></div>
+
+</div>
+</div>
+
+</div>
