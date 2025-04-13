@@ -49,12 +49,6 @@ border-style: none, solid, double 지원
 text-size, padding, margin: int 형식으로 지원
 text-align: left, center, right 등 지원
 
-
-예시:
-
-
-
-
 출처:
 
 SDL window, SDL Renderer, SDL font 등등에서 퍼플렉시티에게 물어봄
