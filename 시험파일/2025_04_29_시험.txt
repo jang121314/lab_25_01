@@ -1,0 +1,204 @@
+
+
+4번 문제
+
+
+
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <string>
+#include <iostream>
+#include <functional>
+
+template<typename T>
+int sort_print(const T begin, const T end, std::string name)
+{
+	std::function<int(std::string)> print = [&](std::string first)
+		{
+			std::cout << first << "sort " << name << ": ";
+			std::for_each(begin, end, [](const auto& i) { std::cout << i << " "; });
+			std::cout << "\n";
+			return 0;
+		};
+	print("no ");
+	std::sort(begin, end);
+	print("");
+	return 0;
+}
+
+int main()
+{
+	std::vector<int> countVector = { 5, 2, 3, 5, 6 };
+	std::list<std::string> nameList = { "f", "b", "a", "d", "e" };
+	std::map<std::string, int> stringIntMap;
+
+	sort_print(countVector.begin(), countVector.end(), "vector");
+	//sort_print(nameList.begin(), nameList.end(), "vector");
+
+	std::cout << "list: " << [&nameList]() {
+		std::string string;
+		for (auto element : nameList)
+		{
+			string += element + ' ';
+		}
+		return string;
+		}() << "\n";
+
+	int index = 0;
+	for (std::string name : nameList)
+	{
+		stringIntMap[name] = countVector[index++];
+	}
+
+	int (*mapPrint)(std::pair<std::string, int>) = [](std::pair<std::string, int> element)
+		{
+			std::cout << element.first << ": " << element.second << " ";
+			return 0;
+		};
+	
+	
+	std::cout << "map: ";
+	std::for_each(stringIntMap.begin(), stringIntMap.end(), mapPrint);
+	std::cout << "\n";
+	return 0;
+}
+
+
+
+5번 문제
+
+
+#include "sqlite3.h"
+#include <iostream>
+#include <string>
+#include <vector>
+
+namespace p1
+{
+	int main(int argc, char** argv)
+	{
+		int error;
+		char* massage = nullptr;
+
+		sqlite3* db;
+
+		error = sqlite3_open("my.db", &db);
+
+
+		const char* CREATETABLE =
+			"DROP TABLE IF EXISTS MYTABLE;"
+			"CREATE TABLE MYTABLE (ID INTEAGR, NAME TEXT, AGE INTEAGR);";
+
+		error = sqlite3_exec(db, CREATETABLE, NULL, NULL, &massage);
+		if (massage)
+		{
+			std::cout << massage;
+			sqlite3_free(massage);
+		}
+
+		std::string (*VALUES_Function)(int, std::string, int) = [](int id, std::string name, int age)
+			{
+				std::string string =
+					"INSERT INTO MYTABLE VALUES ";
+				string += "( ";
+				string += std::to_string(id);
+				string += ", ";
+				string += "'";
+				string += name;
+				string += "', ";
+				string += std::to_string(age);
+				string += "); ";
+				return string;
+			};
+
+		error = sqlite3_exec(db, VALUES_Function(20240000, std::string("김미상"), 20).c_str(), NULL, NULL, &massage);
+		if (massage)
+		{
+			std::cout << massage;
+			sqlite3_free(massage);
+		}
+
+		error = sqlite3_exec(db, VALUES_Function(20240001, std::string("이미상"), 21).c_str(), NULL, NULL, NULL);
+		error = sqlite3_exec(db, VALUES_Function(20240002, std::string("박미상"), 22).c_str(), NULL, NULL, NULL);
+		error = sqlite3_exec(db, VALUES_Function(20240003, std::string("임미상"), 23).c_str(), NULL, NULL, NULL);
+		error = sqlite3_exec(db, VALUES_Function(20240004, std::string("장미상"), 24).c_str(), NULL, NULL, NULL);
+
+		const char* SELECT =
+			"SELECT ID, NAME, AGE FROM MYTABLE;";
+
+		int(*SELECT_Fuction)(void*, int, char**, char**) = [](void* data, int col_count, char** values, char** col_names)
+			{
+
+				for (int i = 0; i < col_count; i++)
+				{
+					switch (i)
+					{
+					case 0:
+						std::cout << "ID: ";
+						break;
+					case 1:
+						std::cout << "name: ";
+						break;
+					case 2:
+						std::cout << "age: ";
+						break;
+					}
+					std::cout << values[i];
+					switch (i)
+					{
+					case 0:
+						std::cout << ", ";
+						break;
+					case 1:
+						std::cout << ", ";
+						break;
+					case 2:
+						std::cout << "\n";
+						break;
+					}
+				}
+				return 0;
+			};
+
+	
+
+		error = sqlite3_exec(db, SELECT, SELECT_Fuction, NULL, &massage);
+		if (massage)
+		{
+			std::cout << massage;
+			sqlite3_free(massage);
+		}
+
+		error = sqlite3_close(db);
+
+
+		return 0;
+
+	}
+}
+
+
+int main(int argc, char** argv)
+{
+	p1::main(argc, argv);
+	return 0;
+}
+
+
+
+
+6번 문제
+
+
+#include <opencv2/opencv.hpp>
+#include <iostream>
+
+int main(int argc, char** argv)
+{
+	cv::Mat img = cv::imread("a.png");
+	cv::imshow("hello world", img);
+	cv::waitKey(0);
+}
+
