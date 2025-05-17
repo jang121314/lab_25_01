@@ -58,4 +58,7 @@ raylib라는 라이브러리는 openGL을 조금 더 쉽게 쓰도록 하는 라
 그러니 다음에는 프로젝트의 규모를 생각하고 어떻게 구현할지 미리 정한 다음에 개발을 시작하겠습니다.
 
 
+## 작동 이미지
+
+![image](https://github.com/user-attachments/assets/1f30ba2f-031e-48b6-a68d-802524d9d304)
 
